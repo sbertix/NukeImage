@@ -14,7 +14,23 @@ Simply pass your `URL` to `NukeImage` and you're ready to go.
 1. Paste `https://github.com/sbertix/NukeImage.git`.
 1. Follow the steps.
 
-## License
+## Usage
+```swift
+import NukeImage
+import SwiftUI
 
+struct YourView: View {
+    let url: URL  // your content url.
+    
+    var body: some View {
+        NukeImage(url: url,
+                  placeholder: Color(.systemGroupedBackground) /* optional */)
+          .resizable()                // fully supported.
+          .renderingMode(.original)   // fully supported.
+    }
+}                      
+```
+
+## License
 **NukeImage** is licensed under the MIT license.  
 Check out [LICENSE](https://github.com/sbertix/LICENSE) for more info.
