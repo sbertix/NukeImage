@@ -14,6 +14,8 @@ Simply pass your `URL` to `NukeImage` and you're ready to go.
 1. Paste `https://github.com/sbertix/NukeImage.git`.
 1. Follow the steps.
 
+**NukeImage** depends on [**Nuke**](https://github.com/kean/Nuke.git).
+
 ## Usage
 ```swift
 import NukeImage
