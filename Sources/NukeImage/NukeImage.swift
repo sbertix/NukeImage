@@ -8,7 +8,6 @@
 
 import Nuke
 import SwiftUI
-import UIKit
 
 /// A `View` loading images asynchronously from a given `URL` using `Nuke`.
 public struct NukeImage<Placeholder: View>: View {
@@ -19,27 +18,27 @@ public struct NukeImage<Placeholder: View>: View {
         /// Resizing mode.
         let resizingMode: SwiftUI.Image.ResizingMode
     }
-    
+
     /// The image.
-    @State private var image: UIImage? = nil
+    @State private var image: Nuke.Image? = nil
     /// The previous url.
     @State private var previousUrl: URL? = nil
     /// Resizing settings.
     fileprivate var resizing: Resizing?
     /// Rendering mode.
     fileprivate var rendering: SwiftUI.Image.TemplateRenderingMode?
-    
+
     /// The placeholder. Defaullts to `nil`.
     public var placeholder: Placeholder?
     /// The resource url.
     public var url: URL
-    
+
     /// Init with a content `url`, and a `placeholder` `Image`.
     public init(url: URL, placeholder: Placeholder? = nil) {
         self.url = url
         self.placeholder = placeholder
     }
-    
+
     /// The actual view.
     public var body: some View {
         // load nuke.

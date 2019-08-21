@@ -6,6 +6,7 @@
 //  Copyright © 2019 Stefano Bertagno. All rights reserved.
 //
 
+#if canImport(UIKit)
 import UIKit
 
 public extension UIColor {
@@ -17,3 +18,4 @@ public extension UIColor {
         }
     }
 }
+#endif
