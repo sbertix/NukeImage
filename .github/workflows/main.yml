@@ -1,7 +1,0 @@
-name: CI
-
-on: [push]
-
-jobs:
-   - name: GitHub Action for SwiftLint
-     uses: norio-nomura/action-swiftlint@1.0.0
