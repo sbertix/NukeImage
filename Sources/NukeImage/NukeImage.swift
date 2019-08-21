@@ -11,7 +11,7 @@ import SwiftUI
 import UIKit
 
 /// A `View` loading images asynchronously from a given `URL` using `Nuke`.
-public struct NukeImage: View {
+public struct NukeImage<Placeholder: View>: View {
     /// Resizing reference.
     fileprivate struct Resizing {
         /// Cap insets.
@@ -29,13 +29,13 @@ public struct NukeImage: View {
     /// Rendering mode.
     fileprivate var rendering: SwiftUI.Image.TemplateRenderingMode?
     
-    /// The placeholder. Defaullts to `UIColor.systemGroupedBackground.image()`.
-    public var placeholder: SwiftUI.Image
+    /// The placeholder. Defaullts to `nil`.
+    public var placeholder: Placeholder?
     /// The resource url.
     public var url: URL
     
     /// Init with a content `url`, and a `placeholder` `Image`.
-    public init(url: URL, placeholder: SwiftUI.Image = Image(uiImage: UIColor.systemGroupedBackground.image())) {
+    public init(url: URL, placeholder: Placeholder? = nil) {
         self.url = url
         self.placeholder = placeholder
     }
@@ -52,14 +52,19 @@ public struct NukeImage: View {
             }
         }
         // return image.
-        let body: SwiftUI.Image = (previousUrl != url
-            ? placeholder
-            : image.flatMap(SwiftUI.Image.init) ?? placeholder)
-            .renderingMode(rendering)
-        // resize.
-        guard let resizing = resizing else { return body }
-        return body.resizable(capInsets: resizing.capInsets,
-                              resizingMode: resizing.resizingMode)
+        switch previousUrl == url {
+        case true:
+            // check for a valid image.
+            guard let view = self.image.map(SwiftUI.Image.init)?.renderingMode(rendering) else {
+                return placeholder.flatMap(AnyView.init) ?? AnyView(EmptyView())
+            }
+            // compose.
+            guard let resizing = resizing else { return AnyView(view) }
+            return AnyView(view.resizable(capInsets: resizing.capInsets,
+                                          resizingMode: resizing.resizingMode))
+        case false:
+            return placeholder.flatMap(AnyView.init) ?? AnyView(EmptyView())
+        }
     }
 }
 
