@@ -22,7 +22,7 @@ public struct NukeImage<Placeholder: View>: View {
     /// The image.
     @State private var image: Nuke.Image? = nil
     /// The previous url.
-    @State private var previousUrl: URL? = nil
+    @State private var previousRequest: ImageRequest? = nil
     /// Resizing settings.
     fileprivate var resizing: Resizing?
     /// Rendering mode.
@@ -31,27 +31,32 @@ public struct NukeImage<Placeholder: View>: View {
     /// The placeholder. Defaullts to `nil`.
     public var placeholder: Placeholder?
     /// The resource url.
-    public var url: URL
+    public var request: ImageRequest
 
+    /// Init with an `ImageRequest`.
+    public init(_ request: ImageRequest, placeholder: Placeholder? = nil) {
+        self.request = request
+        self.placeholder = placeholder
+    }
     /// Init with a content `url`, and a `placeholder` `Image`.
     public init(url: URL, placeholder: Placeholder? = nil) {
-        self.url = url
+        self.request = ImageRequest(url: url)
         self.placeholder = placeholder
     }
 
     /// The actual view.
     public var body: some View {
         // load nuke.
-        Nuke.ImagePipeline.shared.loadImage(with: url) {
+        Nuke.ImagePipeline.shared.loadImage(with: request) {
             // adjuts previous url at the end.
-            defer { self.previousUrl = self.url }
+            defer { self.previousRequest = self.request }
             switch $0 {
             case .success(let response): self.image = response.image
             case .failure: self.image = nil
             }
         }
         // return image.
-        switch previousUrl == url {
+        switch request.urlRequest.url == previousRequest?.urlRequest.url {
         case true:
             // check for a valid image.
             guard let view = self.image.map(SwiftUI.Image.init)?.renderingMode(rendering) else {
