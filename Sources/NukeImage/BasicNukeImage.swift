@@ -44,9 +44,10 @@ public struct BasicNukeImage: View {
     }
     /// The actual body.
     public var body: some View {
-        imageBody.onAppear { [request] in
+        imageBody.onAppear { [imageRequest = request.imageRequest] in
             // load pipeline.
-            Nuke.ImagePipeline.shared.loadImage(with: request.imageRequest) {
+            self.image = nil
+            Nuke.ImagePipeline.shared.loadImage(with: imageRequest) {
                 self.image = try? $0.get().image
             }
         }
