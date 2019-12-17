@@ -62,6 +62,12 @@ public extension BasicNukeImage {
         copy.placeholder = placeholder
         return copy
     }
+    /// Set `placeholder`.
+    func placeholder(_ placeholderImage: Nuke.Image?) -> Self {
+        var copy = self
+        copy.placeholder = placeholderImage.flatMap(SwiftUI.Image.init)
+        return copy
+    }
     /// Adjust image `rendering` mode.
     func renderingMode(_ renderingMode: SwiftUI.Image.TemplateRenderingMode = .original) -> Self {
         var copy = self
