@@ -25,11 +25,10 @@ struct YourView: View {
     let url: URL  // your content url.
     
     var body: some View {
-        NukeImage(url: url,           // or use `.init(_: placeholder:)` 
-                                      // passing an `ImageRequest` for finer control.
-                  placeholder: Color(.systemGroupedBackground) /* optional */)
-          .resizable()                // fully supported.
-          .renderingMode(.original)   // fully supported.
+        NukeImage(url)                // or pass an `ImageRequest` or `URLRquest` for finer control.
+          .placeholder(Color(.systemGroupedBackground)) // optional.
+          .resizable()                // fully supported.  optional.
+          .renderingMode(.original)   // fully supported.  optional
     }
 }                      
 ```
