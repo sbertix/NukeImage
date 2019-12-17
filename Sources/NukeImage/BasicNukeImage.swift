@@ -39,7 +39,7 @@ public struct BasicNukeImage: View {
                 .renderingMode(rendering)
                 .resizable(resizing)
             ?? placeholder
-            ?? Image(.init()))
+            ?? Image.clear)
         .equatable()
     }
     /// The actual body.
