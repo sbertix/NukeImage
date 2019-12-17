@@ -10,7 +10,7 @@ import Nuke
 import SwiftUI
 
 /// A `View` loading images asynchronously from a given `URL` using `Nuke`.
-public struct NukeImage<Placeholder: View>: View {
+public struct NukeImage: View {
     /// Resizing reference.
     fileprivate struct Resizing {
         /// Cap insets.
@@ -20,30 +20,27 @@ public struct NukeImage<Placeholder: View>: View {
     }
 
     /// The image.
-    @State private var image: Nuke.Image? = nil
+    @State private var image: Nuke.Image?
     /// The previous url.
-    @State private var previousRequest: ImageRequest? = nil
+    @State private var previousRequest: ImageRequest?
+    
+    /// The resource url.
+    public var request: ImageRequest
+    
+    /// The placeholder. Defaullts to `nil`.
+    fileprivate var placeholder: AnyView?
     /// Resizing settings.
     fileprivate var resizing: Resizing?
     /// Rendering mode.
     fileprivate var rendering: SwiftUI.Image.TemplateRenderingMode?
 
-    /// The placeholder. Defaullts to `nil`.
-    public var placeholder: Placeholder?
-    /// The resource url.
-    public var request: ImageRequest
-
-    /// Init with an `ImageRequest`.
-    public init(_ request: ImageRequest, placeholder: Placeholder? = nil) {
-        self.request = request
-        self.placeholder = placeholder
+    // MARK: Lifecycle
+    /// Init with `NukeRequestable`.
+    public init(_ requestable: NukeRequestable) {
+        self.request = requestable.imageRequest()
     }
-    /// Init with a content `url`, and a `placeholder` `Image`.
-    public init(url: URL, placeholder: Placeholder? = nil) {
-        self.request = ImageRequest(url: url)
-        self.placeholder = placeholder
-    }
-
+    
+    // MARK: View
     /// The actual view.
     public var body: some View {
         // load nuke.
@@ -70,10 +67,30 @@ public struct NukeImage<Placeholder: View>: View {
             return placeholder.flatMap(AnyView.init) ?? AnyView(EmptyView())
         }
     }
+    
+    // MARK: Deprecated
+    @available(*, deprecated, message: "use `.init(_:).placeholder(_:)` instead.")
+    /// Init with an `ImageRequest`.
+    public init<P>(_ request: ImageRequest, placeholder: P?) where P: View {
+        self.request = request
+        self.placeholder = placeholder.flatMap(AnyView.init)
+    }
+    @available(*, deprecated, message: "use `.init(_:).placeholder(_:)` instead.")
+    /// Init with a content `url`, and a `placeholder` `Image`.
+    public init<P>(url: URL, placeholder: P? = nil) where P: View {
+        self.request = ImageRequest(url: url)
+        self.placeholder = placeholder.flatMap(AnyView.init)
+    }
 }
 
 // MARK: Image pseudo-conformacy
 public extension NukeImage {
+    /// Update placeholder.
+    func placeholder<V>(_ placeholder: V) -> NukeImage where V: View {
+        var copy = self
+        copy.placeholder = AnyView(placeholder)
+        return copy
+    }
     /// Resize image with given `capInsets` and `resizingMode`.
     func resizable(capInsets: EdgeInsets = EdgeInsets(),
                    resizingMode: SwiftUI.Image.ResizingMode = .stretch) -> NukeImage {
