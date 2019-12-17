@@ -28,11 +28,11 @@ struct YourView: View {
         NukeImage(url)                // or pass an `ImageRequest` or `URLRquest` for finer control.
           .placeholder(Color(.systemGroupedBackground)) // optional.
           .resizable()                // fully supported.  optional.
-          .renderingMode(.original)   // fully supported.  optional
+          .renderingMode(.original)   // fully supported.  optional.
     }
 }                      
 ```
 
 ## License
 **NukeImage** is licensed under the MIT license.  
-Check out [LICENSE](https://github.com/sbertix/LICENSE) for more info.
+Check out [LICENSE](https://github.com/sbertix/NukeImage/LICENSE) for more info.
