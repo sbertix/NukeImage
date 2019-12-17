@@ -10,14 +10,14 @@ import Nuke
 
 public protocol NukeRequestable {
     /// Create an `ImageRequest`.
-    func imageRequest() -> ImageRequest
+    var imageRequest: ImageRequest { get }
 }
 extension ImageRequest: NukeRequestable {
-    public func imageRequest() -> ImageRequest { self }
+    public var imageRequest: ImageRequest { self }
 }
 extension URL: NukeRequestable {
-    public func imageRequest() -> ImageRequest { ImageRequest(url: self) }
+    public var imageRequest: ImageRequest { ImageRequest(url: self) }
 }
 extension URLRequest: NukeRequestable {
-    public func imageRequest() -> ImageRequest { ImageRequest(urlRequest: self) }
+    public var imageRequest: ImageRequest { ImageRequest(urlRequest: self) }
 }

@@ -35,9 +35,10 @@ public struct NukeImage: View {
     fileprivate var rendering: SwiftUI.Image.TemplateRenderingMode?
 
     // MARK: Lifecycle
+    @available(*, deprecated, message: "switch to `BasicNukeImage` instead")
     /// Init with `NukeRequestable`.
     public init(_ requestable: NukeRequestable) {
-        self.request = requestable.imageRequest()
+        self.request = requestable.imageRequest
     }
     
     // MARK: View
