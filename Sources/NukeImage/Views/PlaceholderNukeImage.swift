@@ -38,7 +38,6 @@ public struct PlaceholderNukeImage<Placeholder: View>: NukeImageView {
         image.flatMap(SwiftUI.Image.init)?
             .renderingMode(rendering)
             .resizable(resizing)
-            .equatable()
     }
     /// The actual body.
     public var body: some View {
