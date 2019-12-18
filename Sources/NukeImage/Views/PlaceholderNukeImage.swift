@@ -41,12 +41,16 @@ public struct PlaceholderNukeImage<Placeholder: View>: NukeImageView {
     }
     /// The actual body.
     public var body: some View {
-        Group {
-            if image == nil {
-                self.placeholder
-            } else {
-                self.imageBody
-            }
+        GeometryReader {
+            Group {
+                if self.image != nil {
+                    self.imageBody
+                } else if self.placeholder != nil {
+                    self.placeholder
+                } else {
+                    SwiftUI.Image.clear
+                }
+            }.frame(width: $0.size.width, height: $0.size.height)
         }.onAppear { [imageRequest = request.imageRequest] in
             // load pipeline.
             self.image = nil
