@@ -8,19 +8,19 @@
 import Nuke
 import SwiftUI
 
-/// A basic `NukeImageView`, with no placeholder support.
-public struct BasicNukeImage: View {
+/// A basic `NukeImageView`, with `Image` placeholder support.
+public struct NukeImage: NukeImageView {
     /// The request image.
     @Binding var request: NukeRequestable
     /// The image.
     @State private var image: Nuke.Image? = nil
     
     /// The placeholder.
-    private var placeholder: SwiftUI.Image? = nil
+    var placeholder: SwiftUI.Image? = nil
     /// The rendering mode.
-    private var rendering: SwiftUI.Image.TemplateRenderingMode = .original
+    var rendering: SwiftUI.Image.TemplateRenderingMode = .original
     /// The resizing options.
-    private var resizing: Resizing = .none
+    var resizing: Resizing = .none
     
     // MARK: Init
     /// Init with request.
@@ -55,7 +55,7 @@ public struct BasicNukeImage: View {
 }
 
 /// Modifiers extension.
-public extension BasicNukeImage {
+public extension NukeImage {
     /// Set `placeholder`.
     func placeholder(_ placeholder: SwiftUI.Image?) -> Self  {
         var copy = self
@@ -68,17 +68,8 @@ public extension BasicNukeImage {
         copy.placeholder = placeholderImage.flatMap(SwiftUI.Image.init)
         return copy
     }
-    /// Adjust image `rendering` mode.
-    func renderingMode(_ renderingMode: SwiftUI.Image.TemplateRenderingMode = .original) -> Self {
-        var copy = self
-        copy.rendering = renderingMode
-        return copy
-    }
-    /// Resize image with given `capInsets` and `resizingMode`.
-    func resizable(capInsets: EdgeInsets = EdgeInsets(),
-                   resizingMode: SwiftUI.Image.ResizingMode = .stretch) -> Self {
-        var copy = self
-        copy.resizing = .capInsets(capInsets, resizingMode: resizingMode)
-        return copy
+    /// Set `placeholder`.
+    func placeholder<V>(_ placeholder: V) -> PlaceholderNukeImage<V> where V: View {
+        PlaceholderNukeImage($request)
     }
 }
