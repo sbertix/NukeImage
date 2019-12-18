@@ -9,7 +9,7 @@ import Nuke
 import SwiftUI
 
 /// A `protocol` describing `NukeImage` modifiers.
-protocol NukeImageView: View {
+public protocol NukeImageView: View {
     associatedtype Placeholder: View
     
     /// The placeholder.
@@ -20,7 +20,7 @@ protocol NukeImageView: View {
     var resizing: Resizing { get set }
 }
 /// Modifiers extension.
-extension NukeImageView {
+public extension NukeImageView {
     /// Adjust image `rendering` mode.
     func renderingMode(_ renderingMode: SwiftUI.Image.TemplateRenderingMode = .original) -> Self {
         var copy = self

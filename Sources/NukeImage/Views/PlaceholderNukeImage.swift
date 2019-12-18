@@ -16,11 +16,11 @@ public struct PlaceholderNukeImage<Placeholder: View>: NukeImageView {
     @State private var image: Nuke.Image? = nil
     
     /// The placeholder.
-    var placeholder: Placeholder? = nil
+    public var placeholder: Placeholder? = nil
     /// The rendering mode.
-    var rendering: SwiftUI.Image.TemplateRenderingMode = .original
+    public var rendering: SwiftUI.Image.TemplateRenderingMode = .original
     /// The resizing options.
-    var resizing: Resizing = .none
+    public var resizing: Resizing = .none
     
     // MARK: Init
     /// Init with request.

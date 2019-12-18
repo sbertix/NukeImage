@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// Resizing reference.
-enum Resizing {
+public enum Resizing {
     /// None.
     case none
     /// Cap insets and resizing mode.
@@ -16,7 +16,7 @@ enum Resizing {
 }
 
 /// Extend `Image` to allow for resizing.
-extension Image {
+public extension Image {
     /// Resize.
     func resizable(_ resizing: Resizing) -> Image {
         switch resizing {
