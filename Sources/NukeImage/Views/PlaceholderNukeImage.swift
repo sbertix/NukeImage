@@ -60,15 +60,15 @@ public struct PlaceholderNukeImage<Placeholder: View>: NukeImageView {
 /// Modifiers extension.
 public extension PlaceholderNukeImage {
     /// Set `placeholder`.
-    func placeholder(_ placeholder: SwiftUI.Image?) -> NukeImage  {
+    func placeholder(_ placeholder: SwiftUI.Image?) -> some NukeImageView  {
         NukeImage($request).placeholder(placeholder)
     }
     /// Set `placeholder`.
-    func placeholder(_ placeholderImage: Nuke.Image?) -> NukeImage {
+    func placeholder(_ placeholderImage: Nuke.Image?) -> some NukeImageView {
         NukeImage($request).placeholder(placeholderImage)
     }
     /// Set `placeholder`.
-    func placeholder(_ placeholder: Placeholder?) -> Self {
+    func placeholder(_ placeholder: Placeholder?) -> some NukeImageView {
         var copy = self
         copy.placeholder = placeholder
         return copy

@@ -22,14 +22,14 @@ public protocol NukeImageView: View {
 /// Modifiers extension.
 public extension NukeImageView {
     /// Adjust image `rendering` mode.
-    func renderingMode(_ renderingMode: SwiftUI.Image.TemplateRenderingMode = .original) -> Self {
+    func renderingMode(_ renderingMode: SwiftUI.Image.TemplateRenderingMode = .original) -> some NukeImageView {
         var copy = self
         copy.rendering = renderingMode
         return copy
     }
     /// Resize image with given `capInsets` and `resizingMode`.
     func resizable(capInsets: EdgeInsets = EdgeInsets(),
-                   resizingMode: SwiftUI.Image.ResizingMode = .stretch) -> Self {
+                   resizingMode: SwiftUI.Image.ResizingMode = .stretch) -> some NukeImageView {
         var copy = self
         copy.resizing = .capInsets(capInsets, resizingMode: resizingMode)
         return copy

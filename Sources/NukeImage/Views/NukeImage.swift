@@ -57,19 +57,19 @@ public struct NukeImage: NukeImageView {
 /// Modifiers extension.
 public extension NukeImage {
     /// Set `placeholder`.
-    func placeholder(_ placeholder: SwiftUI.Image?) -> Self  {
+    func placeholder(_ placeholder: SwiftUI.Image?) -> some NukeImageView  {
         var copy = self
         copy.placeholder = placeholder
         return copy
     }
     /// Set `placeholder`.
-    func placeholder(_ placeholderImage: Nuke.Image?) -> Self {
+    func placeholder(_ placeholderImage: Nuke.Image?) -> some NukeImageView {
         var copy = self
         copy.placeholder = placeholderImage.flatMap(SwiftUI.Image.init)
         return copy
     }
     /// Set `placeholder`.
-    func placeholder<V>(_ placeholder: V) -> PlaceholderNukeImage<V> where V: View {
-        PlaceholderNukeImage($request)
+    func placeholder<V>(_ placeholder: V) -> some NukeImageView where V: View {
+        PlaceholderNukeImage<V>($request).placeholder(placeholder)
     }
 }
