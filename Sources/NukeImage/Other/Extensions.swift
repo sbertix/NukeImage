@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-/// A completly clear `Image`.
 public extension Image {
     /// An empty image.
     static var clear: Self {

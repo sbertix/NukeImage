@@ -21,6 +21,8 @@ public struct NukeImage: NukeImageView {
     public var rendering: SwiftUI.Image.TemplateRenderingMode = .original
     /// The resizing options.
     public var resizing: Resizing = .none
+    /// The scaling options.
+    public var scaling: Scaling = .none
     
     // MARK: Init
     /// Init with request.
@@ -41,6 +43,7 @@ public struct NukeImage: NukeImageView {
             ?? placeholder
             ?? Image.clear)
         .equatable()
+        .scale(scaling)
     }
     /// The actual body.
     public var body: some View {
