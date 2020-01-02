@@ -56,11 +56,13 @@ public struct NukeImage<Request: NukeRequestable>: NukeImageView {
     
     // MARK: Fetch
     func fetch() {
-        // load pipeline.
-        self.previousRequest = request
-        self.image = nil
-        Nuke.ImagePipeline.shared.loadImage(with: request.imageRequest) {
-            self.image = try? $0.get().image
+        DispatchQueue.main.async {
+            // load pipeline.
+            self.previousRequest = self.request
+            self.image = nil
+            Nuke.ImagePipeline.shared.loadImage(with: self.request.imageRequest) {
+                self.image = try? $0.get().image
+            }
         }
     }
 }
