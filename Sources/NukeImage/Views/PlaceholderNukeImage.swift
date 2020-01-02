@@ -23,7 +23,9 @@ public struct PlaceholderNukeImage<Placeholder: View, Request: NukeRequestable>:
     public var rendering: SwiftUI.Image.TemplateRenderingMode = .original
     /// The resizing options.
     public var resizing: Resizing = .none
-    
+    /// The scaling options.
+    public var scaling: Scaling = .none
+
     // MARK: Init
     /// Init with request.
     public init(_ request: Binding<Request>) {
@@ -48,7 +50,7 @@ public struct PlaceholderNukeImage<Placeholder: View, Request: NukeRequestable>:
         return GeometryReader {
             Group {
                 if self.image != nil {
-                    self.imageBody
+                    self.imageBody.scale(self.scaling)
                 } else if self.placeholder != nil {
                     self.placeholder
                 } else {

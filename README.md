@@ -33,6 +33,8 @@ struct YourView: View {
 }                      
 ```
 
+In **NukeImage** `2.0`, performances are greatly improved when passing `Image`, `NSImage` or `UIImage` placeholders.  
+
 ## License
 **NukeImage** is licensed under the MIT license.  
 Check out [LICENSE](https://github.com/sbertix/NukeImage/blob/master/LICENSE) for more info.

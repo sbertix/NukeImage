@@ -18,6 +18,8 @@ public protocol NukeImageView: View {
     var rendering: SwiftUI.Image.TemplateRenderingMode { get set }
     /// The resizing options.
     var resizing: Resizing { get set }
+    /// The scaling options.
+    var scaling: Scaling { get set }
 }
 /// Modifiers extension.
 public extension NukeImageView {
@@ -32,6 +34,12 @@ public extension NukeImageView {
                    resizingMode: SwiftUI.Image.ResizingMode = .stretch) -> some NukeImageView {
         var copy = self
         copy.resizing = .capInsets(capInsets, resizingMode: resizingMode)
+        return copy
+    }
+    /// Scale image.
+    func fetchedImageScale(_ scaling: Scaling) -> some NukeImageView {
+        var copy = self
+        copy.scaling = scaling
         return copy
     }
 }
