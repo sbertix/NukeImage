@@ -9,9 +9,11 @@ import Nuke
 import SwiftUI
 
 /// A basic `NukeImageView`, with any placeholder support.
-public struct PlaceholderNukeImage<Placeholder: View>: NukeImageView {
+public struct PlaceholderNukeImage<Placeholder: View, Request: NukeRequestable>: NukeImageView {
     /// The request image.
-    @Binding var request: NukeRequestable
+    @Binding var request: Request
+    /// The previous request.
+    @State private var previousRequest: Request?
     /// The image.
     @State private var image: Nuke.Image? = nil
     
@@ -26,12 +28,12 @@ public struct PlaceholderNukeImage<Placeholder: View>: NukeImageView {
 
     // MARK: Init
     /// Init with request.
-    public init(_ request: Binding<NukeRequestable>) {
+    public init(_ request: Binding<Request>) {
         self._request = request
     }
     /// Init with request.
-    public init<Request>(_ request: Request) where Request: NukeRequestable {
-        self._request = .constant(request.imageRequest)
+    public init(_ request: Request) {
+        self._request = .constant(request)
     }
     
     // MARK: Lifecycle
@@ -43,7 +45,9 @@ public struct PlaceholderNukeImage<Placeholder: View>: NukeImageView {
     }
     /// The actual body.
     public var body: some View {
-        GeometryReader {
+        // fetch when needed.
+        if previousRequest?.imageRequest.urlRequest.url != request.imageRequest.urlRequest.url { fetch() }
+        return GeometryReader {
             Group {
                 if self.image != nil {
                     self.imageBody.scale(self.scaling)
@@ -53,10 +57,16 @@ public struct PlaceholderNukeImage<Placeholder: View>: NukeImageView {
                     SwiftUI.Image.clear
                 }
             }.frame(width: $0.size.width, height: $0.size.height)
-        }.onAppear { [imageRequest = request.imageRequest] in
+        }
+    }
+    
+    // MARK: Fetch
+    func fetch() {
+        DispatchQueue.main.async {
             // load pipeline.
+            self.previousRequest = self.request
             self.image = nil
-            Nuke.ImagePipeline.shared.loadImage(with: imageRequest) {
+            Nuke.ImagePipeline.shared.loadImage(with: self.request.imageRequest) {
                 self.image = try? $0.get().image
             }
         }
@@ -67,11 +77,11 @@ public struct PlaceholderNukeImage<Placeholder: View>: NukeImageView {
 public extension PlaceholderNukeImage {
     /// Set `placeholder`.
     func placeholder(_ placeholder: SwiftUI.Image?) -> some NukeImageView  {
-        NukeImage($request).placeholder(placeholder)
+        NukeImage<Request>($request).placeholder(placeholder)
     }
     /// Set `placeholder`.
     func placeholder(_ placeholderImage: Nuke.Image?) -> some NukeImageView {
-        NukeImage($request).placeholder(placeholderImage)
+        NukeImage<Request>($request).placeholder(placeholderImage)
     }
     /// Set `placeholder`.
     func placeholder(_ placeholder: Placeholder?) -> some NukeImageView {
