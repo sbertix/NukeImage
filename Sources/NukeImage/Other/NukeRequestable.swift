@@ -8,7 +8,7 @@
 import Foundation
 import Nuke
 
-public protocol NukeRequestable {
+public protocol NukeRequestable: Equatable {
     /// Create an `ImageRequest`.
     var imageRequest: ImageRequest { get }
 }
@@ -20,4 +20,9 @@ extension URL: NukeRequestable {
 }
 extension URLRequest: NukeRequestable {
     public var imageRequest: ImageRequest { ImageRequest(urlRequest: self) }
+}
+extension ImageRequest: Equatable {
+    public static func == (lhs: ImageRequest, rhs: ImageRequest) -> Bool {
+        lhs.urlRequest == rhs.urlRequest
+    }
 }
