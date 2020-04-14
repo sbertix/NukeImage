@@ -5,8 +5,10 @@
 ![Platform](https://img.shields.io/cocoapods/p/SwiftyInsta.svg?style=flat)
 <img src="https://img.shields.io/badge/supports-Swift%20Package%20Manager-ff69b4.svg">  
 
-**NukeImage** is a simple **SwiftUI** implementation for [**Nuke**](https://github.com/kean/Nuke.git).  
+**NukeImage** was a simple **SwiftUI** implementation for [**Nuke**](https://github.com/kean/Nuke.git).  
 Simply pass your `URL` to `NukeImage` and you're ready to go.
+
+### Use the official [FetchImage](https://github.com/kean/FetchImage.git) instead.
 
 ## Installation
 ### Swift Package Manager (Xcode 11 and above)
